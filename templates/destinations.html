@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Destinations | Smart Travel Planner</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">
+            🧳 Smart Travel Planner
+        </div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/destinations">Destinations</a>
+            <a href="/plan-trip">Plan Trip</a>
+            <a href="#">Login</a>
+        </div>
+    </nav>
+
+
+    <section class="destinations-section">
+
+        <h1>Explore Destinations 🌍</h1>
+
+        <p class="destination-subtitle">
+            Discover beautiful places for your next trip.
+        </p>
+
+
+        <div class="destination-container">
+
+            {% for destination in destinations %}
+
+            <div class="destination-card">
+
+                <img src="{{ url_for('static', filename=destination[7]) }}"
+                     alt="{{ destination[1] }}"
+                     class="destination-image">
+
+                <h2>{{ destination[1] }}</h2>
+
+                <p>
+                    📍 {{ destination[2] }}
+                </p>
+
+                <span class="category">
+                    {{ destination[3] }}
+                </span>
+
+                <p class="description">
+                    {{ destination[4] }}
+                </p>
+
+                <p>
+                    💰 Entry Fee:
+                    {% if destination[5] == 0 %}
+                        Free
+                    {% else %}
+                        ₹{{ destination[5] }}
+                    {% endif %}
+                </p>
+
+                <p>
+                    🗓️ Best Time: {{ destination[6] }}
+                </p>
+
+                <a href="{{ url_for('destination_details', destination_id=destination[0]) }}">
+                    <button>
+                        View Details
+                    </button>
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+</body>
+</html>

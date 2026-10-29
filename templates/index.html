@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Travel Planner</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+
+<nav>
+    <h2 class="logo">🧳 Smart Travel Planner</h2>
+
+    <div class="nav-links">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('destinations') }}">Destinations</a>
+        <a href="{{ url_for('plan_trip') }}">Plan Trip</a>
+        <a href="{{ url_for('login') }}">Login</a>
+    </div>
+</nav>
+
+
+
+    <section class="hero">
+
+        <div class="hero-text">
+
+            <h1>Plan Your Perfect Trip</h1>
+
+            <p>
+                Discover beautiful places and create
+                your perfect travel plan.
+            </p>
+
+            <a href="/plan-trip">
+                <button>Plan My Trip</button>
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <section class="categories">
+
+        <h2>Explore Your Interests</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>🏔️ Trekking</h3>
+                <p>Explore mountains and forts.</p>
+            </div>
+
+            <div class="card">
+                <h3>🏖️ Beaches</h3>
+                <p>Discover beautiful beaches.</p>
+            </div>
+
+            <div class="card">
+                <h3>🛕 Temples</h3>
+                <p>Visit peaceful spiritual places.</p>
+            </div>
+
+            <div class="card">
+                <h3>🏰 Historical</h3>
+                <p>Explore historical destinations.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+</body>
+</html>

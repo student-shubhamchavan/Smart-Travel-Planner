@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Plan Your Trip</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav>
+
+        <div class="logo">
+            🧳 Smart Travel Planner
+        </div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="#">Destinations</a>
+            <a href="/plan-trip">Plan Trip</a>
+            <a href="#">Login</a>
+        </div>
+
+    </nav>
+
+
+    <!-- Trip Planning Section -->
+
+    <section class="trip-section">
+
+        <div class="trip-box">
+
+            <h1>Plan Your Trip ✈️</h1>
+
+            <p>
+                Enter your travel details and create your
+                perfect trip plan.
+            </p>
+
+
+            <form action="/generate-trip" method="POST">
+
+                
+                <label>Destination</label>
+
+                <input
+                    type="text"
+                    name="destination"
+                    placeholder="Example: Konkan"
+                    required>
+
+
+                <label>Number of Days</label>
+
+                <input
+                    type="number"
+                    name="days"
+                    placeholder="Example: 3"
+                    min="1"
+                    required>
+
+
+                <label>Your Budget (₹)</label>
+
+                <input
+                    type="number"
+                    name="budget"
+                    placeholder="Example: 10000"
+                    min="1"
+                    required>
+
+
+                <label>Number of People</label>
+
+                <input
+                    type="number"
+                    name="people"
+                    placeholder="Example: 2"
+                    min="1"
+                    required>
+
+
+                <label>What do you like?</label>
+
+                <div class="interest-options">
+                    <label>
+                        <input type="checkbox" name="interests" value="Trekking">
+                        Trekking
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="interests" value="Beaches">
+                        Beaches
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="interests" value="Temples">
+                        Temples
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="interests" value="Historical Places">
+                        Historical Places
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="interests" value="Nature">
+                        Nature
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="interests" value="Waterfalls">
+                        Waterfalls
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="interests" value="Camping">
+                        Camping
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="interests" value="Photography">
+                        Photography
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="interests" value="Local Food">
+                        Local Food
+                    </label>
+                </div>
+
+
+                <button type="submit">
+                    Create My Trip
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>

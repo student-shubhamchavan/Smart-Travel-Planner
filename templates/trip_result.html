@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Trip Plan | Smart Travel Planner</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="result-page">
+
+<nav class="result-nav">
+    <a href="/" class="result-logo">🧳 Smart Travel Planner</a>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/destinations">Destinations</a>
+        <a href="/plan-trip">Plan Trip</a>
+    </div>
+</nav>
+
+{% set place = destination | lower %}
+{% set beach_place = 'beach' in place or 'tarkarli' in place or 'konkan' in place %}
+{% set fort_place = 'fort' in place or 'rajgad' in place or 'raigad' in place or 'shivneri' in place %}
+{% set temple_place = 'theur' in place or 'ganpati' in place or 'temple' in place %}
+
+{% if beach_place %}
+    {% set hero_image = 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=85' %}
+{% elif fort_place %}
+    {% set hero_image = 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1800&q=85' %}
+{% elif temple_place %}
+    {% set hero_image = 'https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=1800&q=85' %}
+{% else %}
+    {% set hero_image = 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1800&q=85' %}
+{% endif %}
+
+<header class="trip-hero"
+        style="background-image: linear-gradient(90deg, rgba(4,48,77,.65), rgba(4,48,77,.10)), url('{{ hero_image }}');">
+    <div class="trip-hero-content">
+        <span class="hero-label">YOUR NEXT ADVENTURE</span>
+        <h1>{{ destination }} Trip Plan</h1>
+        <p>Discover places, enjoy experiences and make memories.</p>
+        <div class="hero-tags">
+            <span>✦ Explore</span>
+            <span>✦ Experience</span>
+            <span>✦ Enjoy</span>
+        </div>
+    </div>
+</header>
+
+<main class="result-container">
+
+    <section class="trip-summary">
+
+        <div class="summary-card">
+            <span class="summary-icon">📍</span>
+            <div>
+                <small>Destination</small>
+                <strong>{{ destination }}</strong>
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <span class="summary-icon">📅</span>
+            <div>
+                <small>Duration</small>
+                <strong>{{ days }} Days</strong>
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <span class="summary-icon">💰</span>
+            <div>
+                <small>Total Budget</small>
+                <strong>₹{{ "%.2f"|format(budget) }}</strong>
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <span class="summary-icon">👥</span>
+            <div>
+                <small>People</small>
+                <strong>{{ people }}</strong>
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <span class="summary-icon">❤️</span>
+            <div>
+                <small>Your Interests</small>
+                <strong>
+                    {% if interests %}
+                        {{ interests | join(' + ') }}
+                    {% else %}
+                        General
+                    {% endif %}
+                </strong>
+            </div>
+        </div>
+
+    </section>
+
+    <div class="section-heading">
+        <span>YOUR JOURNEY</span>
+        <h2>Your Day-wise Trip Plan</h2>
+        <p>Explore your destination one day at a time.</p>
+    </div>
+
+    <section class="day-grid">
+
+        {% for item in itinerary %}
+        <article class="day-card">
+
+            {% if beach_place %}
+
+                {% if loop.index == 1 %}
+                    {% set day_image = url_for('static', filename='images/kokan_beach.jpeg') %}
+                    {% set day_title = 'Beach Exploration' %}
+                {% elif loop.index == 2 %}
+                    {% set day_image = url_for('static', filename='images/kokan_food.jpeg') %}
+                    {% set day_title = 'Local Food & Culture' %}
+                {% else %}
+                    {% set day_image = url_for('static', filename='images/kokan_temple.jpeg') %}
+                    {% set day_title = 'Temple & Local Visit' %}
+                {% endif %}
+
+            {% elif fort_place %}
+
+                {% if 'shivneri' in place %}
+
+                    {% if loop.index == 1 %}
+                        {% set day_image = url_for('static', filename='images/shivneri.jpeg') %}
+                    {% elif loop.index == 2 %}
+                        {% set day_image = url_for('static', filename='images/Shivneri2.jpeg') %}
+                    {% else %}
+                        {% set day_image = url_for('static', filename='images/Shivneri3.jpeg') %}
+                    {% endif %}
+
+                {% elif 'rajgad' in place %}
+
+                    {% if loop.index == 1 %}
+                        {% set day_image = url_for('static', filename='images/raigad.jpeg') %}
+                    {% elif loop.index == 2 %}
+                        {% set day_image = url_for('static', filename='images/Raigad1.jpeg') %}
+                    {% else %}
+                        {% set day_image = url_for('static', filename='images/raigad2.jpeg') %}
+                    {% endif %}
+
+                {% else %}
+
+                    {% if loop.index == 1 %}
+                        {% set day_image = url_for('static', filename='images/raigad.jpeg') %}
+                    {% elif loop.index == 2 %}
+                        {% set day_image = url_for('static', filename='images/Raigad1.jpeg') %}
+                    {% else %}
+                        {% set day_image = url_for('static', filename='images/raigad2.jpeg') %}
+                    {% endif %}
+
+                {% endif %}
+
+                {% set day_title = 'Fort & Scenic Exploration' %}
+
+            {% elif temple_place %}
+
+                {% if loop.index == 1 %}
+                    {% set day_image = url_for('static', filename='images/theur2.jpeg') %}
+                {% elif loop.index == 2 %}
+                    {% set day_image = url_for('static', filename='images/theur3.jpeg') %}
+                {% else %}
+                    {% set day_image = url_for('static', filename='images/theur2.jpeg') %}
+                {% endif %}
+
+                {% set day_title = 'Temple & Local Exploration' %}
+
+            {% else %}
+
+                {% if loop.index == 1 %}
+                    {% set day_image = url_for('static', filename='images/kokan_beach.jpeg') %}
+                {% elif loop.index == 2 %}
+                    {% set day_image = url_for('static', filename='images/Tarkarli2.jpeg') %}
+                {% else %}
+                    {% set day_image = url_for('static', filename='images/Tarkarli3.jpeg') %}
+                {% endif %}
+
+                {% set day_title = 'Nature & Local Exploration' %}
+
+            {% endif %}
+
+            <div class="day-card-heading">
+                <span class="day-number">DAY {{ item.day }}</span>
+                <h3>{{ day_title }}</h3>
+            </div>
+
+            <img class="day-photo"
+                 src="{{ day_image }}"
+                 alt="{{ destination }} scenery"
+                 loading="lazy">
+
+            <div class="day-card-body">
+
+                <div class="activity-row">
+                    <span class="activity-time">Morning</span>
+                    <div>
+                        <h4>🌅 Start Exploring</h4>
+                        <p>{{ item.morning }}</p>
+                    </div>
+                </div>
+
+                <div class="activity-row">
+                    <span class="activity-time">Afternoon</span>
+                    <div>
+                        <h4>📸 Explore Nearby Places</h4>
+                        <p>{{ item.afternoon }}</p>
+                    </div>
+                </div>
+
+                <div class="activity-row">
+                    <span class="activity-time">Evening</span>
+                    <div>
+                        <h4>🌇 Relax & Enjoy</h4>
+                        <p>{{ item.evening }}</p>
+                    </div>
+                </div>
+
+                {% if item.budget_tip %}
+                <p class="cost-note">
+                    💡 {{ item.budget_tip }}
+                </p>
+                {% endif %}
+
+            </div>
+        </article>
+        {% endfor %}
+
+    </section>
+
+    <section class="bottom-grid">
+
+        <div class="info-card highlights">
+            <h3>⭐ Trip Highlights</h3>
+            <ul>
+
+                {% if 'tarkarli' in place %}
+                    <li>Explore Tarkarli Beach and the Konkan coastline.</li>
+                    <li>Discover local Konkan food and culture.</li>
+                    <li>Enjoy coastal views and sunset photography.</li>
+                    <li>Explore nearby attractions when accessible.</li>
+
+                {% elif 'shivneri' in place %}
+                    <li>Explore Shivneri Fort and its historic landmarks.</li>
+                    <li>Learn about Chhatrapati Shivaji Maharaj's history.</li>
+                    <li>Enjoy scenic hill views.</li>
+                    <li>Capture photographs at permitted viewpoints.</li>
+
+                {% elif 'rajgad' in place %}
+                    <li>Explore Rajgad Fort and its historic areas.</li>
+                    <li>Enjoy trekking and mountain scenery.</li>
+                    <li>Discover accessible viewpoints and trails.</li>
+                    <li>Plan a safe return before dark.</li>
+
+                {% elif 'raigad' in place %}
+                    <li>Explore Raigad Fort and its historic landmarks.</li>
+                    <li>Discover the fort's Maratha history.</li>
+                    <li>Enjoy mountain views from accessible viewpoints.</li>
+                    <li>Capture memorable photographs.</li>
+
+                {% elif 'theur' in place %}
+                    <li>Visit Shri Chintamani Ganpati Temple.</li>
+                    <li>Experience peaceful darshan.</li>
+                    <li>Explore nearby local attractions.</li>
+                    <li>Discover the spiritual atmosphere of Theur.</li>
+
+                {% elif 'konkan' in place %}
+                    <li>Explore the Konkan coastline.</li>
+                    <li>Discover regional food and local culture.</li>
+                    <li>Enjoy scenic nature and beach views.</li>
+                    <li>Explore nearby attractions.</li>
+
+                {% else %}
+                    <li>Explore {{ destination }} and its main attractions.</li>
+                    <li>Enjoy activities based on your interests.</li>
+                    <li>Discover nearby places when accessible.</li>
+                    <li>Capture memorable photographs.</li>
+                {% endif %}
+
+            </ul>
+        </div>
+
+        <div class="info-card travel-tips">
+            <h3>💡 Travel Tips</h3>
+            <ul>
+                {% if beach_place %}
+                    <li>Check weather and sea conditions before visiting.</li>
+                    <li>Carry water, sunscreen and comfortable footwear.</li>
+                    <li>Follow local beach safety instructions.</li>
+                    <li>Confirm transport and accommodation costs.</li>
+                {% elif fort_place %}
+                    <li>Start trekking early and check the weather.</li>
+                    <li>Carry enough water and wear sturdy shoes.</li>
+                    <li>Stay on permitted trails and avoid risky edges.</li>
+                    <li>Plan your return before dark.</li>
+                {% elif temple_place %}
+                    <li>Check temple timings before travelling.</li>
+                    <li>Follow temple rules and dress respectfully.</li>
+                    <li>Carry water and keep valuables safe.</li>
+                    <li>Check local transport options in advance.</li>
+                {% else %}
+                    <li>Check weather before travelling.</li>
+                    <li>Carry water and comfortable shoes.</li>
+                    <li>Confirm opening hours and local transport.</li>
+                    <li>Keep extra money for emergencies.</li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <div class="info-card estimated-cost">
+            <h3>💵 Budget Summary</h3>
+
+            <div class="cost-row">
+                <span>Total trip budget</span>
+                <strong>₹{{ "%.2f"|format(budget) }}</strong>
+            </div>
+
+            <div class="cost-row">
+                <span>Number of people</span>
+                <strong>{{ people }}</strong>
+            </div>
+
+            <div class="cost-row">
+                <span>Budget per person</span>
+                <strong>₹{{ "%.2f"|format(budget_per_person) }}</strong>
+            </div>
+
+            <p class="cost-note">
+                This is your planned budget, not a live price quotation.
+            </p>
+
+            <p class="cost-note">
+                💡 Smart Budget Tip:
+                {% if budget_per_person < 500 %}
+                    Choose low-cost transport and food options.
+                {% elif budget_per_person < 1500 %}
+                    Compare transport and accommodation prices.
+                {% else %}
+                    Keep some money aside for unexpected expenses.
+                {% endif %}
+            </p>
+        </div>
+
+    </section>
+
+    <section class="result-actions">
+        <h2>Ready for your next adventure?</h2>
+        <p>Change your interests or create a new travel plan.</p>
+        <a href="/plan-trip" class="action-button">Plan Another Trip</a>
+        
+        <form action="/download-trip-pdf" method="POST">
+            <input type="hidden" name="destination" value="{{ destination }}">
+            <input type="hidden" name="days" value="{{ days }}">
+            <input type="hidden" name="budget" value="{{ budget }}">
+            <input type="hidden" name="people" value="{{ people }}">
+
+            {% for interest in interests %}
+                <input type="hidden" name="interests" value="{{ interest }}">
+            {% endfor %}
+            <input type="hidden" name="itinerary_text"
+                   value="{{ itinerary | tojson | forceescape }}">
+            <input type="hidden" name="itinerary_text"
+                   value="{{ itinerary | tojson | forceescape }}">
+            <button type="submit" class="action-button">
+                📄 Download Trip Plan PDF
+            </button>
+        </form>
+
+        <a href="/destinations" class="action-button secondary-button">Explore Destinations</a>
+    </section>
+
+</main>
+
+<footer class="result-footer">
+    <p>Smart Travel Planner · Explore · Relax · Repeat</p>
+</footer>
+
+</body>
+</html>

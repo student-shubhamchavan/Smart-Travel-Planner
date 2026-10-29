@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ destination[1] }} | Smart Travel Planner</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            🧳 Smart Travel Planner
+        </div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/destinations">Destinations</a>
+            <a href="/plan-trip">Plan Trip</a>
+            <a href="#">Login</a>
+        </div>
+    </nav>
+
+
+    <!-- Destination Details -->
+
+    <section class="destination-details">
+
+        <div class="details-container">
+
+            <!-- Image -->
+            <div class="details-image">
+                <img src="{{ url_for('static', filename=destination[7]) }}"
+                     alt="{{ destination[1] }}">
+            </div>
+
+
+            <!-- Information -->
+            <div class="details-content">
+
+                <h1>{{ destination[1] }}</h1>
+
+                <p class="details-location">
+                    📍 {{ destination[2] }}
+                </p>
+
+                <span class="category">
+                    {{ destination[3] }}
+                </span>
+
+                <h3>About This Place</h3>
+
+                <p class="details-description">
+                    {{ destination[4] }}
+                </p>
+
+                <div class="travel-info">
+
+                    <p>
+                        💰 <strong>Entry Fee:</strong>
+
+                        {% if destination[5] == 0 %}
+                            Free
+                        {% else %}
+                            ₹{{ destination[5] }}
+                        {% endif %}
+                    </p>
+
+                    <p>
+                        🗓️ <strong>Best Time:</strong>
+                        {{ destination[6] }}
+                    </p>
+
+                </div>
+
+                <a href="/destinations">
+                    <button class="back-button">
+                        ← Back to Destinations
+                    </button>
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>
